@@ -159,7 +159,7 @@ export const updatePost = async (req: Request, res: Response) => {
     if (req.file?.filename) {
       const imagePath = path.join(
         __dirname,
-        "../../uploads/posts",
+        "../../imgs/posts",
         req.file.filename
       );
       try {
