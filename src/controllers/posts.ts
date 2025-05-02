@@ -21,26 +21,16 @@ export const createPost = async (req: Authenticate, res: Response) => {
     console.log(req.file);
 
     let newImage: any;
-    if (req.file?.filename) {
-      const imagePath = path.join(
-        __dirname,
-        "../../uploads/posts",
-        req.file.filename
-      );
-      try {
-        const imageBuffer = await fs.readFile(imagePath);
-        const base64Img = imageBuffer.toString("base64");
-        newImage = await uploadImgs(base64Img); // Now passing base64
-      } finally {
-        await fs.rm(imagePath).catch(() => {});
-      }
+    if (req.file?.buffer) {
+      const base64Img = req.file.buffer.toString("base64");
+      newImage = await uploadImgs(base64Img);
     }
 
     console.log(newImage);
 
     const newPost = await postsModel.create({
       content,
-      imageUrl: newImage?.data.data.url,
+      imageUrl: newImage?.data?.data?.url,
       author: userId,
     });
 
