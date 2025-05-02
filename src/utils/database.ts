@@ -6,7 +6,7 @@ export const connect = async () => {
   
   await mongoose
 
-    .connect(`${process.env.MONGO_URL}test?authSource=admin`)
+    .connect(`${process.env.MONGO_URL}`)
     .then(() => {
       console.log("✅ Connected to MongoDB");
     })
