@@ -18,7 +18,7 @@ export const updateUser = async (req: Authenticate, res: Response) => {
     if (req.file?.filename) {
       const imagePath = path.join(
         __dirname,
-        "../../uploads/posts",
+        "../uploads/posts",
         req.file.filename
       );
       // console.log(imagePath);
