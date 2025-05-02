@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-
+import { config } from "dotenv";
+config();
 export const connect = async () => {
   await mongoose
-    .connect("mongodb://127.0.0.1:27017/social-media")
+    .connect(`${process.env.MONGO_URL}`)
     .then(() => {
       console.log("✅ Connected to MongoDB");
     })

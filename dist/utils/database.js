@@ -7,7 +7,7 @@ exports.connect = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const connect = async () => {
     await mongoose_1.default
-        .connect("mongodb://127.0.0.1:27017/social-media")
+        .connect("mongodb-production-d0be.up.railway.app")
         .then(() => {
         console.log("✅ Connected to MongoDB");
     })
