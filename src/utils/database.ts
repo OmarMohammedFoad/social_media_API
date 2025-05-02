@@ -6,7 +6,7 @@ export const connect = async () => {
   
   await mongoose
 
-     .connect(`${process.env.MONGO_PUBLIC_URL}/test`)
+     .connect(`${process.env.MONGO_URL}/test`)
     .then(() => {
       console.log("✅ Connected to MongoDB");
     })
