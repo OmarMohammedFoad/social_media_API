@@ -12,7 +12,7 @@ export default async function uploadImgs(img: string | undefined) {
 
     const res = await axios.post("https://api.imgbb.com/1/upload", formData, {
       params: {
-        key: "4fea2399129982d02aab402b46c1ba59",
+        key: "7f37c717735d9ba2c96f735e9312dbee",
       },
       headers: {
         "Content-Type": "multipart/form-data",
