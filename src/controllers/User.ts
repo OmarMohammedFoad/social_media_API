@@ -15,6 +15,8 @@ export const updateUser = async (req: Authenticate, res: Response) => {
     // console.log(req.body);
     if (req.file) {
       try {
+        console.log(req.file);
+        
         const base64Img = req.file.buffer.toString("base64");
         const newImage = await uploadImgs(base64Img);
 
