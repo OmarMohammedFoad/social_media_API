@@ -12,19 +12,30 @@ export const updateUser = async (req: Authenticate, res: Response) => {
     const userId = req.user;
     const updates = req.body;
 
-    // console.log(req.body);
-    if (req.file) {
-      try {
-        console.log(req.file);
-        
-        const base64Img = req.file.buffer.toString("base64");
-        const newImage = await uploadImgs(base64Img);
+    let newImage: any;
+    console.log(req.body);
 
-        if (newImage?.data.data.url) {
-          updates.profileImage = newImage.data.data.url;
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
+    if (req.file?.filename) {
+      const imagePath = path.join(
+        __dirname,
+        "../../uploads/posts",
+        req.file.filename
+      );
+      // console.log(imagePath);
+
+      // try {
+        console.log(imagePath, "imagePath");
+
+      try {
+        const imageBuffer = await fs.readFile(imagePath);
+        const base64Img = imageBuffer.toString("base64");
+        newImage = await uploadImgs(base64Img);
+      } finally {
+        await fs.rm(imagePath).catch(()=>{});
+      }
+
+      if (newImage?.data.data.url) {
+        updates.profileImage = newImage.data.data.url;
       }
     }
 
