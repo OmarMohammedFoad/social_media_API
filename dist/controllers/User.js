@@ -15,7 +15,7 @@ const updateUser = async (req, res) => {
         let newImage;
         console.log(req.body);
         if (req.file?.filename) {
-            const imagePath = path_1.default.join(__dirname, "../../uploads/posts", req.file.filename);
+            const imagePath = path_1.default.join(__dirname, "../uploads/posts", req.file.filename);
             // console.log(imagePath);
             // try {
             console.log(imagePath, "imagePath");

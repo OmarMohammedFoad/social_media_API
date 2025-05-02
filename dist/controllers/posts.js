@@ -134,7 +134,7 @@ const updatePost = async (req, res) => {
         const { postId } = req.params;
         let newImage;
         if (req.file?.filename) {
-            const imagePath = path_1.default.join(__dirname, "../../uploads/posts", req.file.filename);
+            const imagePath = path_1.default.join(__dirname, "../imgs/posts", req.file.filename);
             try {
                 const imageBuffer = await promises_1.default.readFile(imagePath);
                 const base64Img = imageBuffer.toString("base64");
