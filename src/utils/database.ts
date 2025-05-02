@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 config();
 export const connect = async () => {
-  console.log("data connected");
+  console.log("data connecteddd");
   
   await mongoose
 
