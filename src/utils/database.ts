@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 config();
 export const connect = async () => {
-  console.log("data connecteddd");
   
   await mongoose
-
-    .connect(`${process.env.MONGO_URL}`)
+  // mongodb://localhost:27017/
+    .connect(`mongodb://localhost:27017/social_media`)
     .then(() => {
       console.log("✅ Connected to MongoDB");
     })
@@ -14,3 +13,4 @@ export const connect = async () => {
       console.error("❌ Failed to connect to MongoDB:", error);
     });
 };
+

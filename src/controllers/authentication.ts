@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response) => {
         id: newUser._id,
         name: newUser.username,
         email: newUser.email,
-        profileImage:newUser.profileImage
+        profileImage: newUser.profileImage,
       },
     });
   } catch (error) {
@@ -35,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  try {"{{$randomLoremWord}}"
+  try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });

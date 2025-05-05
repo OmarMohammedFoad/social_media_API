@@ -12,8 +12,6 @@ export const updateUser = async (req: Authenticate, res: Response) => {
     const userId = req.user;
     const updates = req.body;
 
-    console.log(req.body);
-
     if (req.file?.buffer) {
       try {
         const base64Img = req.file.buffer.toString("base64");
@@ -26,6 +24,9 @@ export const updateUser = async (req: Authenticate, res: Response) => {
         console.error("Error uploading image:", error);
       }
     }
+
+    console.log(updates);
+
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updates },
@@ -51,7 +52,12 @@ export const getUserInfo = async (req: Authenticate, res: Response) => {
     const user = await User.findById(userId);
     // console.log(user);
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      username: user?.username,
+      profileImage: user?.profileImage,
+      bio: user?.bio,
+      jobTitle: user?.jobTitle,
+    });
   } catch (error) {
     console.error("Update error:", error);
     return res.status(500).json({ message: "Failed to update user" });

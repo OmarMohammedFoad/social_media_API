@@ -53,6 +53,9 @@ export const createPost = async (req: Authenticate, res: Response) => {
 export const getAllPost = async (req: Authenticate, res: Response) => {
   try {
     const { id } = req.params;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const page = parseInt(req.query.page as string) || 1;
+    const skip = (page - 1) * limit;
     if (id) {
       const post = await postsModel
         .findById(id)
@@ -80,7 +83,9 @@ export const getAllPost = async (req: Authenticate, res: Response) => {
           select: "username email profileImage",
         },
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     // console.log(allPosts[8].comments);
 
@@ -95,11 +100,11 @@ export const getAllPostsByRelatedUser = async (
   res: Response
 ) => {
   try {
-    console.log("asdasdas");
-
     const { id } = req.params;
     const userId = req.user;
-    console.log(userId);
+    const limit = parseInt(req.query.limit as string) || 10;
+    const page = parseInt(req.query.page as string) || 1;
+    const skip = (page - 1) * limit;
 
     if (id) {
       const post = await postsModel
@@ -129,7 +134,9 @@ export const getAllPostsByRelatedUser = async (
           select: "username email profileImage",
         },
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     // console.log(allPosts[8].comments);
 
@@ -143,35 +150,29 @@ export const getAllPostsByRelatedUser = async (
 
 export const updatePost = async (req: Request, res: Response) => {
   try {
-    const { postId } = req.params;
-
+    const { id } = req.params;
+    // console.log(id,"sadsa");
+    
     let newImage: any;
-    if (req.file?.filename) {
-      const imagePath = path.join(
-        __dirname,
-        "../imgs/posts",
-        req.file.filename
-      );
-      try {
-        const imageBuffer = await fs.readFile(imagePath);
-        const base64Img = imageBuffer.toString("base64");
-        newImage = await uploadImgs(base64Img); // Now passing base64
-      } finally {
-        await fs.rm(imagePath).catch(() => {});
-      }
+    if (req.file?.buffer) {
+      const base64Img = req.file.buffer.toString("base64");
+      newImage = await uploadImgs(base64Img);
     }
 
-    console.log(newImage.data.data);
+    // console.log(newImage.data.data);
 
     if (newImage) {
       req.body.imageUrl = newImage?.data.data.url;
     }
-
-    const updated = await postsModel.findByIdAndUpdate(postId, req.body, {
+    // console.log(req.body);
+    
+    const updated = await postsModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     res.json(updated);
   } catch (error: any) {
+    console.log(error);
+    
     res.status(500).json({ error: error.message });
   }
 };
